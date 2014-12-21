@@ -36,7 +36,7 @@ class IndexController extends Zend_Controller_Action{
         	if( count ($checkData) == 0 ) 
         	{
         		$this->view->falseInfo = "Wrong username or password, please try again";
-        		$this->render('login');
+        		$this->_redirect('/index');
                 return;
         	}
 
@@ -44,14 +44,14 @@ class IndexController extends Zend_Controller_Action{
         	if( $checkData['password'] != $password )
         	{
         		$this->view->falseInfo = "Wrong username or password, please try again";
-        		$this->render('login');
+        		$this->_redirect('/index');
                 return;	
         	}
 
         	$cookie_name = "login";
 			$cookie_value = $username;
         	setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
-        	$this->render('index');	       	
+        	$this->_redirect('/index');	       	
         	return;
  		}
 
