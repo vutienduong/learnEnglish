@@ -1,0 +1,8 @@
+<h1>Hello Zend Framework - Admin Module</h1>
+<?php
+echo $this->hello;
+foreach ($this->listGoKorea as $order => $name) {
+	echo "\n Mr. {$name} is {$order} th man go to Korea in this semester";
+}
+echo $this->render("index/outerRender.phtml");
+?>
