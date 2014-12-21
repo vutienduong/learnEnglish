@@ -37,22 +37,22 @@ class IndexController extends Zend_Controller_Action{
         	{
         		$this->view->falseInfo = "Wrong username or password, please try again";
         		$this->render('login');
+                return;
         	}
-        	echo "if account not exist";
 
-        	var_dump($checkData);
+        	$checkData = $checkData[0];
         	if( $checkData['password'] != $password )
         	{
         		$this->view->falseInfo = "Wrong username or password, please try again";
-        		$this->render('login');	
+        		$this->render('login');
+                return;	
         	}
-        	echo "if pass wrong";
 
         	$cookie_name = "login";
 			$cookie_value = $username;
         	setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         	$this->render('index');	       	
-        	echo "true info";
+        	return;
  		}
 
  	}
