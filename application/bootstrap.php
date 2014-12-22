@@ -14,5 +14,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $db = $this->getPluginResource('db')->getDbAdapter();
         Zend_Registry::set('db', $db);
         //test git
+        //adb
     }
 } 
