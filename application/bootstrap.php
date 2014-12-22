@@ -12,6 +12,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initDatabase(){
         $db = $this->getPluginResource('db')->getDbAdapter();
-        Zend_Registry::set('db', $db);    
+        Zend_Registry::set('db', $db);
+        //test git
     }
 } 
