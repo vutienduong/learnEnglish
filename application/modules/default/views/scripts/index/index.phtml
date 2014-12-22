@@ -1,1 +1,10 @@
 <h2>Main Page</h2>
+<?php echo $this->deleteCookieForm ;?>
+<ul class="nav nav-tabs">
+<?php
+$first = true; 
+foreach ($this->navs as $nav)
+{
+	?>
+	<li role="presentation"<?php if($first){$first = !$first; echo " class=\"active\""; }?>><a href="#"><?php echo $nav ;?></a></li>
+<?php } ?></ul>

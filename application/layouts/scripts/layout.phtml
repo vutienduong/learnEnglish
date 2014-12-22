@@ -1,14 +1,12 @@
+<!DOCTYPE html>
 <?php echo $this->doctype() ?>  
 <html>  
 <head>  
-    <!--<?php echo $this->headTitle() ?>  
-    <?php echo $this->headMeta() ?>       
-    <?php echo $this->headLink() ?>  
-    <?php echo $this->headScript() ?>     -->
-    <link rel="stylesheet" type="text/css" href="public/dist/css/bootstrap.css">
-    <script src="public/js/jquery-1.11.0.min.js"></script>
-    <script src="public/dist/js/bootstrap.min.js"></script>
-    <script src="public/js/index1.js"></script>
+    <link href="<?php echo $this->baseUrl()?>/public/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+   	<link href="<?php echo $this->baseUrl()?>/public/css/index1.css" rel="stylesheet" type="text/css">
+    <?php echo $this->headScript()->appendFile($this->baseUrl() . '/public/js/jquery-1.11.0.min.js');?>
+	<?php $this->headScript()->appendFile($this->baseUrl() . '/public/dist/js/bootstrap.min.js');?>
+	<script src="<?php echo $this->baseUrl() ?>/public/js/index1.js"></script>
 </head>  
 <body> 
     <?php
