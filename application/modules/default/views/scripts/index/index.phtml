@@ -6,5 +6,5 @@ $first = true;
 foreach ($this->navs as $nav)
 {
 	?>
-	<li role="presentation"<?php if($first){$first = !$first; echo " class=\"active\""; }?>><a href="#"><?php echo $nav ;?></a></li>
+	<li role="presentation"<?php if($first){$first = !$first; echo " class=\"active\""; }?>><a href="<?php echo $this->url(array('controller'=>$nav["controller"], 'action' => $nav["action"]));?>"><?php echo $nav["display"] ;?></a></li>
 <?php } ?></ul>

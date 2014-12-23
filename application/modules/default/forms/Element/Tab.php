@@ -17,5 +17,6 @@ class Form_Element_Tab extends Zend_Form_Element
 			));
 			
 		}
+	}
 }
 ?>

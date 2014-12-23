@@ -11,7 +11,13 @@ class IndexController extends Zend_Controller_Action{
 		$button = new Zend_Form_Element_Submit('delete_cookie_btn');
 		$form->addElement($button);
 		$this->view->deleteCookieForm = $form;
-		$navs = array("Hoc tu", "Them tu", "Kiem tra", "like");
+		$navs = array(
+				array("display"=>"Hoc tu","controller"=>"learnWord", "action"=>"index"),
+				array("display"=>"Them tu","controller"=>"addWord", "action"=>"index"),
+				array("display"=>"Kiem tra","controller"=>"exam", "action"=>"index"),
+				array("display"=>"like","controller"=>"like", "action"=>"index"),
+				
+		);
 		$this->view->navs = $navs;
  	}
 

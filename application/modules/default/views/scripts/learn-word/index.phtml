@@ -1,0 +1,13 @@
+<?php 
+if ($this->word)
+{
+	?>
+	<form action="" name="learnWord" id="learnWord">
+		<label><?php echo $this->word['col_eng'] ?></label>
+		<input type="text" name="vieInput" id="vieInput" />
+		<label><?php echo "hint: ".$this->word['col_vie'] ?></label>
+	</form>
+	<a href="<?php echo $this->url(array('controller'=>'index', 'action' =>'index'));?>">Main Page</a>
+	<?php
+}
+?>
