@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+<?php
+foreach ($this->navs as $nav)
+{
+	?>
+	<li role="presentation">
+		<a href="<?php echo $this->url(array('controller'=>$nav["controller"], 'action' => $nav["action"]));?>">
+			<?php echo $nav["display"] ;?>
+		</a>
+	</li>
+<?php } ?>
+</ul>
