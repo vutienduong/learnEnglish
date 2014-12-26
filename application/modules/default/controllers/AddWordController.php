@@ -18,9 +18,16 @@ class AddWordController extends Zend_Controller_Action{
 		$select = "<select class='form-control' id='family_type' name='family_type' multiple='true' >";
 		$options = "";
 		$array_family_type = split(",", self::ARR_FAMILY_TYPE);
+		$first = true;
 		foreach ($array_family_type as $type)
 		{
-			$options .= "<option value='". $type ."'>". $type ."</option>";
+			$selected = "";
+			if($first)
+			{
+				$selected = "selected='selected'";
+				$first = false;
+			}
+			$options .= "<option value='". $type ."'" . $selected . ">". $type ."</option>";
 		}
 		$this->view->select_html= $select . $options . "</select>"; 
 		$this->view->url = self::URL_ADD_INDEX;
