@@ -43,4 +43,13 @@ class AddWordController extends Zend_Controller_Action{
 		$this->view->url = self::URL_MORE;
 		$this->render("index");
 	}
+	
+	public function storetodbAction()
+	{
+		echo "Hello word";
+		if($_SERVER['REQUEST_METHOD'] == 'POST' && is_array($_POST))
+		{
+			var_dump($_POST); die();
+		}
+	}
 }

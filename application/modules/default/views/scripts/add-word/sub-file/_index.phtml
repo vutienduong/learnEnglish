@@ -3,7 +3,29 @@ $(document).ready(function(){
 	$("#submit").click(function()
 	{
 		console.log("submit");
+		if($("#english").val().length == 0)
+		{
+			$("#warning").text("Length of word must great than 0").style("color", "red");
+			return;
+		}
+		
 		//call ajax
+		var jqxhr = $.post( "addWord/storeToDB",{eng:$("#english").val(),
+			vie:$("#vietnamese").val(),
+			type:$("#family_type").val()},function() {
+		  alert( "success" );
+		})
+		  .done(function() {
+		    alert( "second success" );
+		  })
+		  .fail(function() {
+		    alert( "error" );
+		  })
+		  .always(function() {
+		    alert( "finished" );
+		});
+		
+		//end call ajax
 		$newWord = $("<a href='' class='list-group-item'></a>");
 		console.log($("#english").text());
 		$newWord.text($("#english").val());
@@ -12,6 +34,9 @@ $(document).ready(function(){
 });
 </script>
 <form class='form-inline' name='add_form' id='add_form' action="" method="post" onsubmit="return false;">
+ 	  <div class='form-group'>
+	    <p id="warning" name="warning"></p>
+	  </div>
 	  <div class='form-group'>
 	    <label class='sr-only' for='english'>English</label>
 	    <input type='text' class='form-control' id='english' placeholder='Word (English)'>
