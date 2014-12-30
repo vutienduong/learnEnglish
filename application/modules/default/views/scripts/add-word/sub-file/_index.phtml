@@ -2,7 +2,7 @@
 $(document).ready(function(){
 	$("#submit").click(function()
 	{
-		console.log("submit");
+		$("#warning").text("");
 		if($("#english").val().length == 0)
 		{
 			$("#warning").text("Length of word must great than 0").style("color", "red");
@@ -12,46 +12,62 @@ $(document).ready(function(){
 		//call ajax
 		var jqxhr = $.post( "addWord/storeToDB",{eng:$("#english").val(),
 			vie:$("#vietnamese").val(),
-			type:$("#family_type").val()},function() {
-		  alert( "success" );
-		})
-		  .done(function() {
-		    alert( "second success" );
+			type:$("#family_type").val()},function(data) {
+				//console.log(data);
+		  		//console.log(JSON.parse(data));
+		  })
+		  .done(function(data) {
+			  response = JSON.parse(data);
+			  if(response.err)
+			  {
+				  $("#warning").text("This word is existed");
+			  }
+			  else if(response.success)
+			  {
+				//end call ajax
+				$newWord = $("<a href='' class='list-group-item'></a>");
+				console.log($("#english").text());
+				$newWord.text($("#english").val());
+				$newWord.appendTo($("#recent_add_words"));
+			  }
 		  })
 		  .fail(function() {
-		    alert( "error" );
-		  })
-		  .always(function() {
-		    alert( "finished" );
-		});
-		
-		//end call ajax
-		$newWord = $("<a href='' class='list-group-item'></a>");
-		console.log($("#english").text());
-		$newWord.text($("#english").val());
-		$newWord.appendTo($("#recent_add_words"));
+			  //console.log( "error" );
+		  });
+
 	});
 });
 </script>
-<form class='form-inline' name='add_form' id='add_form' action="" method="post" onsubmit="return false;">
- 	  <div class='form-group'>
-	    <p id="warning" name="warning"></p>
-	  </div>
-	  <div class='form-group'>
-	    <label class='sr-only' for='english'>English</label>
-	    <input type='text' class='form-control' id='english' placeholder='Word (English)'>
-	  </div>
-	  <div class='form-group'>
-	    <label class='sr-only' for='vietnamese'>Vietnamese</label>
-	    <input type='text' class='form-control' id='vietnamese' placeholder='Meaning (Vietnamese)'>
-	  </div>
-	   <div class='form-group'>
-	    <label class='sr-only' for='family_type'>Family Type</label>
+<a href="<?php echo $this->url(array('controller'=>'index', 'action' =>'index'));?>">Main Page</a>
+<p id="warning" name="warning"></p>
+<form class='form-inline' name='add_form' id='add_form' action=""
+	method="post" onsubmit="return false;">
+	
+	<div class='form-group'>
+		<label class='sr-only' for='english'>English</label> <input
+			type='text' class='form-control' id='english'
+			placeholder='Word (English)'>
+	</div>
+	<div class='form-group'>
+		<label class='sr-only' for='vietnamese'>Vietnamese</label> <input
+			type='text' class='form-control' id='vietnamese'
+			placeholder='Meaning (Vietnamese)'>
+	</div>
+	<div class='form-group'>
+		<label class='sr-only' for='family_type'>Family Type</label>
 	    	<?php echo $this->select_html ?> 
 	  </div>
-	  <button type='submit' name="submit" id="submit" class='btn btn-default'>Add</button>
+	<button type='submit' name="submit" id="submit" class='btn btn-default'>Add</button>
 </form>
 
 <div class="list-group" name="recent_add_words" id="recent_add_words">
-  <a href="#" class="list-group-item">---</a>
+	<p>RECENT ADD WORDS</p>
+	<?php if($this->recentAddWordList)
+	{
+		foreach ($this->recentAddWordList as $key=>$value)
+		{
+			//var_dump($value);
+			echo "<a href=\"#\" class=\"list-group-item\">{$value['col_eng']}</a>";
+		}
+	}?>
 </div>

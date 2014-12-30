@@ -1,9 +1,9 @@
 <?php
 class TestController extends Zend_Controller_Action{
 	public function indexAction(){
-		$word = new Model_Word();
-		var_dump($word->getWordNTh(1));
-		echo $word->getRandomNumber(12);
-		die();
+		$dao = new Model_DAO_WordDAO();
+		$eng = 'cat';
+		$vie = 'con cho';
+		$dao->getWordByPair($eng, $vie);
 	}
 }

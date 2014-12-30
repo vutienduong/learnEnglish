@@ -1,13 +1,13 @@
 <?php 
-if ($this->word)
+if ($this->word !== null)
 {
 	?>
 	<form action="" name="learnWord" id="learnWord">
-		<label><?php echo $this->word['col_eng'] ?></label>
-		<input type="text" name="vieInput" id="vieInput" />
-		<label><?php echo "hint: ".$this->word['col_vie'] ?></label>
+		<label><?php echo $this->word['col_eng']. " : " ?></label>
+		<label><?php echo $this->word['col_vie'] ?></label>
 	</form>
-	<a href="<?php echo $this->url(array('controller'=>'index', 'action' =>'index'));?>">Main Page</a>
 	<?php
 }
 ?>
+<a class="btn btn-default" href="<?php echo $this->url(array('controller'=>'learnWord', 'action' =>'index'));?>" role="button">Next</a>
+<a href="<?php echo $this->url(array('controller'=>'index', 'action' =>'index'));?>">Main Page</a>

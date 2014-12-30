@@ -12,43 +12,13 @@ class Model_Word {
 	protected function getWordDAO() {
 		return $this->_wordDao;
 	}
-	public function getRandomWord($condition = null) {
-		if ($condition == null) {
-			return $this->getRandomWordByIndex ();
+	
+	public function getRandomWord() {
+		$maxId = $this->getMaxCurrentId ();
+		if ($maxId == null) {
+			return null;
 		}
-			
-		if (is_array ( $condition )) {
-			if (array_key_exists ( self::START_INDEX_COND, $condition )) 
-			{
-				if (array_key_exists ( self::END_INDEX_COND, $condition )) {
-					return $this->getRandomWordByIndex ( $condition [self::START_INDEX_COND], $condition [self::END_INDEX_COND] );
-				} else {
-					return $this->getRandomWordByIndex ( $condition [self::START_INDEX_COND] );
-				}
-			}
-			else if (array_key_exists ( self::GET_WORD_AT_MAX_INDEX_COND, $condition )) 
-			{
-				$maxId = $this->getMaxCurrentId ();
-				return $this->getWordNTh ( $maxId );
-			}
-		}
-		
-		return null;
-	}
-	protected function getRandomWordByIndex($start = null, $end = null) {
-		if ($start == null) {
-			$start = 1;
-		}
-		
-		if ($end == null) {
-			$maxId = $this->getMaxCurrentId ();
-			if ($maxId == null) {
-				return null;
-			}
-		} else {
-			$maxId = $end;
-		}
-		$randId = $this->getRandomNumber ( $start, $maxId );
+		$randId = rand ( 0, $maxId );
 		return $this->getWordNTh ( $randId );
 	}
 	protected function getMaxCurrentId() {
@@ -74,5 +44,35 @@ class Model_Word {
 			return $this->getWordDAO ()->updateWord ( $word, "byEng" );
 		}
 		return $this->getWordDAO ()->updateWord ( $word, "byId" );
+	}
+	
+	public function deleteOldRecentAddWordData()
+	{
+		$ctime = time();
+		$dao = new Model_DAO_WordDAO();
+		$nearestCTime = $dao->getNearestCTime();
+		if(is_array($nearestCTime) && count($nearestCTime) > 0)
+		{
+			$nearestCTime = $nearestCTime[0];
+			$nearestCTime = array_pop($nearestCTime);
+			if($nearestCTime != null)
+			{
+				$nearestCTime = intval($nearestCTime);
+			
+				$distance = $ctime - $nearestCTime;
+				if($distance > AddWordController::MAX_TIME_STORE_RECENT_WORD)
+				{
+					$dao->deleteAllNearestCTime();
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public function getTopRecentAddWord()
+	{
+		$dao = new Model_DAO_WordDAO();
+		return $dao->getTopNearestAddWord();
 	}
 }

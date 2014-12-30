@@ -44,7 +44,7 @@ class Model_Bean_Word {
 	{
 		$result = array();
 		$result[self::ID] = $this->getId();
-		$result[self::END] = $this->getEng();
+		$result[self::ENG] = $this->getEng();
 		$result[self::VIE] = $this->getVie();
 		$result[self::CREATE_TIME] = $this->getCreateTime();
 		$result[self::FAMILY_TYPE] = $this->getFamilyType();
