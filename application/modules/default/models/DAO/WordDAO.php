@@ -19,6 +19,12 @@ class Model_DAO_WordDAO
 		return $table->insert($dataArray);
 	}
 	
+	public function addWordByArrayData($dataArray)
+	{
+		$table = new Zend_Db_Table('dictionary');
+		return $table->insert($dataArray);
+	}
+	
 	public function getWordByPair( $eng, $vie )
 	{
 		
@@ -90,5 +96,15 @@ class Model_DAO_WordDAO
 		$query ="SELECT a._id, a.col_eng FROM dictionary as a JOIN recent_add_word as b on a._id = b.col_word limit ".$limit;
 		$sql=$this->db->query($query);
 		return $sql->fetchAll();
+	}
+	
+	public function getWordIncludeString($str)
+	{
+		$table = new Zend_Db_Table('dictionary');
+		$select = $table->select()->where("col_eng LIKE '%{$str}%'" );
+		$result = $table->fetchAll($select);
+		if($result == null)
+			return null;
+		return $result->toArray();
 	}
 }

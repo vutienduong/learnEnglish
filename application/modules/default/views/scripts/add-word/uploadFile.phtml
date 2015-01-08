@@ -1,2 +1,87 @@
 <?= $this->render('add-word/sub-file/navigation.phtml') ?>
-<h2>Add: upload File</h2>
+<style>
+	.container{
+		margin-left: 50px;
+		margin-right: 50px;
+		margin-top: 50px;
+		border: 1px solid grey;
+		padding: 20px;
+	}
+</style>
+<div class="container">
+	<?php
+	if($this->successAddWords)
+	{	$wordsDiv = "<div>";
+		$wordsDiv .= "<div>Add successfully below words:</div>";
+		$wordsDiv .= "<table class='table table-bordered' name='' id=''>";
+		$wordsDiv .= "<tr>";
+		$ths = array("ENGLISH", "VIETNAMESE" );
+		foreach ($ths as $th)
+		{
+			$wordsDiv.= "<th>$th</th>";
+		}
+		$wordsDiv.= "</tr>";
+		
+		foreach ($this->successAddWords as $word)
+		{
+			$eng = array_key_exists('col_eng', $word) ? $word['col_eng'] : '/';
+			$vie = array_key_exists('col_vie', $word) ? $word['col_vie'] : '/';
+			$wordsDiv .= "<tr>";
+			$wordsDiv .= "<td>{$eng}</td>";
+			$wordsDiv .= "<td>{$vie}</td>";
+			$wordsDiv .= "</tr>";
+		}
+		$wordsDiv .= "</table>";
+		$wordsDiv .= "</div>";
+		echo $wordsDiv;
+	} 
+	?>
+	<div id="guide" name="guide">
+		<div class="row">
+		  <div class="col-md-4"></div>
+		  <div class="col-md-4">
+		  	<p style="color: blue">Copy content of text file to below frame
+			with a word per a line
+			and type delimiter to textbox
+			click save to finish!
+			</p>
+		  </div>
+		  <div class="col-md-4"></div>
+		</div>
+		
+	</div>
+	
+	<div id="main-content" name="main-content">
+		<form action="<?php echo $this->url(array('controller'=>'addWord', 'action' =>'uploadfile'));?>" method="post" >
+			<div class="form-group">
+			    <label for="delimiter"> Delimiter </label>
+			    <input type="text" class="form-control" id="delimiter" name="delimiter" placeholder=" : ">
+			</div>
+			<div class="form-group">
+			    <label for="pattern"> Pattern </label>
+			   	<select class="form-control" id="pattern" name="pattern" >
+				<?php
+					$defaultIsFirst = TRUE;
+					foreach ($this->patterns as $text => $value)
+					{
+						if($defaultIsFirst)
+						{
+							echo "<option value='{$value}' selected>{$text}</option>";
+							$defaultIsFirst = FALSE;
+						}
+						else {
+							echo "<option value='{$value}'>{$text}</option>";
+						}
+					} 
+				?>
+				</select>
+			</div>
+			
+			<div class="form-group">
+			    <label for="content"> Content </label>
+			    <textarea class="form-control" id="content"  name="content" placeholder=" cat : con mèo " rows="10"></textarea>
+			</div>
+			<button type="submit" class="btn btn-default">Save</button>
+		</form>
+	</div>
+</div>

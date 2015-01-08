@@ -1,0 +1,43 @@
+<?php 
+?>
+<form action="<?php echo $this->url(array('controller'=>'searchWord', 'action' =>'index'));?>" method="post" >
+	<input name="keyword" id="keyword" />
+	<button type="submit">Search</button>
+</form>
+<div class="warning">
+<?php
+if($this->error)
+{
+	echo "<p>{$this->error}</p>"; 
+} 
+?>
+</div>
+<div class="search_result">
+<?php
+	if($this->result)
+	{
+		$tableStr = "<table class='table' name='' id=''>";
+		$tableStr.= "<tr>";
+		$ths = array("id", "eng", "vie", "type", "memo" );
+		foreach ($ths as $th)
+		{
+			$tableStr.= "<th>$th</th>";
+		}
+		$tableStr.= "<tr>";
+		
+		foreach ($this->result as $word)
+		{
+			$tableStr.= "<tr>";
+			$tableStr.= "<td>{$word['_id']}</td>";
+			$tableStr.= "<td>{$word['col_eng']}</td>";
+			$tableStr.= "<td>{$word['col_vie']}</td>";
+			$tableStr.= "<td>{$word['col_family_type']}</td>";
+			$tableStr.= "<td>{$word['col_memo']}</td>";
+			$tableStr.= "</tr>";
+		}
+		$tableStr.= "</table>";
+		echo $tableStr;
+	}
+?>
+</div>
+<a href="<?php echo $this->url(array('controller'=>'index', 'action' =>'index'));?>">Main Page</a>

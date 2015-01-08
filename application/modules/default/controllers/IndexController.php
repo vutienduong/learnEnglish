@@ -16,7 +16,7 @@ class IndexController extends Zend_Controller_Action{
 				array("display"=>"Them tu","controller"=>"addWord", "action"=>"index"),
 				array("display"=>"Kiem tra","controller"=>"exam", "action"=>"index"),
 				array("display"=>"like","controller"=>"like", "action"=>"index"),
-				
+				array("display"=>"Tra từ","controller"=>"searchWord", "action"=>"index"),	
 		);
 		$this->view->navs = $navs;
  	}

@@ -7,6 +7,9 @@ class AddWordController extends Zend_Controller_Action {
 	const ARR_FAMILY_TYPE = "----,noun,verb,conj,adj,adv,prep,phrase";
 	const MAX_TIME_STORE_RECENT_WORD = 7200;
 	
+	const PATTERN_ENG_VIE = 0;
+	const PATTERN_VIE_ENG = 1;
+	
 	
 	public function init() {
 		$navs = array (
@@ -58,8 +61,53 @@ class AddWordController extends Zend_Controller_Action {
 		}
 	}
 	public function uploadfileAction() {
+		if ($this->getRequest()->isPost())
+		{
+			$data = $this->getRequest()->getPost();
+			$delimiter = array_key_exists('delimiter', $data) ? $data['delimiter'] : '';
+			$content = array_key_exists('content', $data) ? $data['content'] : '';
+			$pattern = array_key_exists('pattern', $data) ? $data['pattern'] : self::PATTERN_ENG_VIE;
+			if($delimiter && $content)
+			{
+				$lines = split("\n", $content);
+				$wordLogic = new Model_Word();
+				$successAddWords = array();
+				foreach ($lines as $line)
+				{
+					if(!$line)
+					{
+						continue;
+					}
+					
+					$defs = split($delimiter, $line);
+					if(count($defs) > 1)
+					{
+						$dataArr = array();
+						
+						if(!$defs[0] || !$defs[1]){
+							continue;
+						}
+						
+						if($pattern == self::PATTERN_ENG_VIE)
+						{
+							$dataArr[Model_Bean_Word::ENG] = $defs[0];
+							$dataArr[Model_Bean_Word::VIE] = $defs[1];
+						}
+						else
+						{
+							$dataArr[Model_Bean_Word::ENG] = $defs[1];
+							$dataArr[Model_Bean_Word::VIE] = $defs[0];
+						}
+						$dataArr[Model_Bean_Word::FAMILY_TYPE] = 'phrase';
+						$wordLogic->addWordByArrayData($dataArr);
+						$successAddWords[] = $dataArr;
+					}
+				}
+				$this->view->successAddWords = $successAddWords;
+			}
+		}
+		$this->view->patterns = array('Eng - Vie' => self::PATTERN_ENG_VIE, 'Vie - Eng' => self::PATTERN_VIE_ENG);
 		$this->view->url = self::URL_UPLOAD_FILE;
-		$this->render ( "index" );
 	}
 	public function moreAction() {
 		$this->view->url = self::URL_MORE;

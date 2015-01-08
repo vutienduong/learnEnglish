@@ -38,6 +38,10 @@ class Model_Word {
 		$wordBean = new Model_Bean_Word ( $data );
 		return $this->getWordDAO ()->addWord ( $data );
 	}
+	
+	public function addWordByArrayData($data) {
+		return $this->getWordDAO ()->addWordByArrayData( $data );
+	}
 	public function updateWord($data) {
 		$wordBean = new Model_Bean_Word ( $data );
 		if ($wordBean->getId () == '') {
@@ -74,5 +78,22 @@ class Model_Word {
 	{
 		$dao = new Model_DAO_WordDAO();
 		return $dao->getTopNearestAddWord();
+	}
+	
+	//return Word Bean or null
+	public function getWordById($id)
+	{
+		return $this->getWordDAO()->getWordById($id);
+	}
+	
+	//return array Word beans or array()
+	public function getWordIncludeString($str)
+	{
+		$result = $this->getWordDAO()->getWordIncludeString($str);
+		if($result == null)
+		{
+			return array();
+		}
+		else return $result;
 	}
 }

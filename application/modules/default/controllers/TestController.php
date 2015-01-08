@@ -4,6 +4,8 @@ class TestController extends Zend_Controller_Action{
 		$dao = new Model_DAO_WordDAO();
 		$eng = 'cat';
 		$vie = 'con cho';
-		$dao->getWordByPair($eng, $vie);
+		//$rs = $dao->getWordIncludeString('Chirstmas');
+		$str = "fjkds 134";
+		var_dump(split('aaa', $str));
 	}
 }
